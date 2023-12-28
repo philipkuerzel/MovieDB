@@ -1004,21 +1004,25 @@ const movies = [
 const movieContainer = document.getElementById('movie-container');
 
 const createMovie = (movieInfo) => {
-        const movieBox = document.createElement('div');
-        movieBox.className = 'movie-box';
-        movieBox.innerHTML = `
-            <h2>${movieInfo[0]}</h3>
-            <p>${movieInfo[1]}</p>
-            <p>${movieInfo[2]}</p>
-            <p>${movieInfo[3]}</p>
-            <p>${movieInfo[4].join(', ')}</p>
-            <p>${movieInfo[5]}</p>`;
-        return movieBox
-};
+    const movieBox = document.createElement('div');
+    movieBox.className = 'movie-box';
+    const genres = movieInfo[4].map(genre => `<p>${genre}</p>`).join('');
+    movieBox.innerHTML = `
+        <h2>${movieInfo[0]}</h2>
+        <p>${movieInfo[1]}</p>
+        <p>${movieInfo[2]}</p>
+        <p>${movieInfo[3]}</p>
+        ${genres}
+        <p>${movieInfo[5]}</p>`;
+
+    return movieBox;
+}
 
 for (let i = 0; i < movies.length; i++) {
     movieContainer.appendChild(createMovie(movies[i]));
 }
+
+
 
 const sortMovies = (sortType) => {
     movieContainer.innerHTML = "";
@@ -1042,15 +1046,21 @@ const sortMovies = (sortType) => {
 };
 
 const searchMovie = () => {
-    const searchInput = document.getElementById("search").value;
-    const searchResult = movies.filter(movie => movie[0].toLowerCase().includes(searchInput.toLowerCase()));
+    const searchInput = document.getElementById("search").value.toLowerCase();
+    const searchResult = movies.filter(movie => movie[0].toLowerCase().includes(searchInput));
     movieContainer.innerHTML = "";
-    for (let i = 0; i < searchResult.length; i++) {
-        movieContainer.appendChild(createMovie(searchResult[i]));
+
+    if (searchResult.length === 0) {
+        const noResultMessage = document.createElement('p');
+        noResultMessage.textContent = 'Sorry! Film not found.';
+        movieContainer.appendChild(noResultMessage);
+    } else {
+        for (let i = 0; i < searchResult.length; i++) {
+            movieContainer.appendChild(createMovie(searchResult[i]));
+        }
     }
-    return searchMovie
+
+    return searchMovie;
 }
-// Eventlistener, der die Suchfunktion ausführt, sobald eine Taste gedrückt wird, als eine Art Live-Suche
+
 document.getElementById("search").addEventListener("keyup", searchMovie);
-
-
