@@ -1000,15 +1000,10 @@ const movies = [
         '8.3'
     ]
 ];
-const searchInput = document.querySelector("#search").value
+
 const movieContainer = document.getElementById('movie-container');
 
-const displayMovies = () => {
-    
-    movieContainer.innerHTML = '';
-
-    // Erzeugen Sie für jedes Element im Array eine Movie-Box
-    movies.forEach(movieInfo => {
+const createMovie = (movieInfo) => {
         const movieBox = document.createElement('div');
         movieBox.className = 'movie-box';
         movieBox.innerHTML = `
@@ -1018,11 +1013,15 @@ const displayMovies = () => {
             <p>${movieInfo[3]}</p>
             <p>${movieInfo[4].join(', ')}</p>
             <p>${movieInfo[5]}</p>`;
-        movieContainer.appendChild(movieBox);
-    });
+        return movieBox
 };
 
+for (let i = 0; i < movies.length; i++) {
+    movieContainer.appendChild(createMovie(movies[i]));
+}
+
 const sortMovies = (sortType) => {
+    movieContainer.innerHTML = "";
     switch (sortType) {
         case 'yearUp':
             movies.sort((a, b) => a[1] - b[1]);
@@ -1034,32 +1033,24 @@ const sortMovies = (sortType) => {
             movies.sort((a, b) => b[5] - a[5]);
             break;
         default:
-            console.error('Invalid sortType:', sortType);
             return;
-    }
-
-    displayMovies();
-};
-
-const searchMovies = () => {
-    // Abrufen des Suchbegriffs aus dem Eingabefeld und in Kleinbuchstaben umwandeln
-    const searchTerm = searchInput.value.toLowerCase();
-
-    // Filtern der Filme basierend auf dem in Kleinbuchstaben umgewandelten Suchbegriff
-    const searchResults = movies.filter(movie => {
-        for (const value of movie) {
-            // In Kleinbuchstaben umwandeln und prüfen, ob der in Kleinbuchstaben umgewandelte Suchbegriff enthalten ist
-            if (value.toString().toLowerCase().includes(searchTerm)) {
-                return true;
-            }
         }
-        return false;
-    });
-
-    // Anzeige der gefilterten Filme
-    displayMovies(searchResults);
+        for (let i = 0; i < movies.length; i++) {
+                movieContainer.appendChild(createMovie(movies[i]));
+            }
+    return sortMovies
 };
 
+const searchMovie = () => {
+    const searchInput = document.getElementById("search").value;
+    const searchResult = movies.filter(movie => movie[0].toLowerCase().includes(searchInput.toLowerCase()));
+    movieContainer.innerHTML = "";
+    for (let i = 0; i < searchResult.length; i++) {
+        movieContainer.appendChild(createMovie(searchResult[i]));
+    }
+    return searchMovie
+}
+// Eventlistener, der die Suchfunktion ausführt, sobald eine Taste gedrückt wird, als eine Art Live-Suche
+document.getElementById("search").addEventListener("keyup", searchMovie);
 
-displayMovies();
 
