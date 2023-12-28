@@ -1000,4 +1000,66 @@ const movies = [
         '8.3'
     ]
 ];
+const searchInput = document.querySelector("#search").value
+const movieContainer = document.getElementById('movie-container');
+
+const displayMovies = () => {
+    
+    movieContainer.innerHTML = '';
+
+    // Erzeugen Sie für jedes Element im Array eine Movie-Box
+    movies.forEach(movieInfo => {
+        const movieBox = document.createElement('div');
+        movieBox.className = 'movie-box';
+        movieBox.innerHTML = `
+            <h2>${movieInfo[0]}</h3>
+            <p>${movieInfo[1]}</p>
+            <p>${movieInfo[2]}</p>
+            <p>${movieInfo[3]}</p>
+            <p>${movieInfo[4].join(', ')}</p>
+            <p>${movieInfo[5]}</p>`;
+        movieContainer.appendChild(movieBox);
+    });
+};
+
+const sortMovies = (sortType) => {
+    switch (sortType) {
+        case 'yearUp':
+            movies.sort((a, b) => a[1] - b[1]);
+            break;
+        case 'yearDown':
+            movies.sort((a, b) => b[1] - a[1]);
+            break;
+        case 'bestRate':
+            movies.sort((a, b) => b[5] - a[5]);
+            break;
+        default:
+            console.error('Invalid sortType:', sortType);
+            return;
+    }
+
+    displayMovies();
+};
+
+const searchMovies = () => {
+    // Abrufen des Suchbegriffs aus dem Eingabefeld und in Kleinbuchstaben umwandeln
+    const searchTerm = searchInput.value.toLowerCase();
+
+    // Filtern der Filme basierend auf dem in Kleinbuchstaben umgewandelten Suchbegriff
+    const searchResults = movies.filter(movie => {
+        for (const value of movie) {
+            // In Kleinbuchstaben umwandeln und prüfen, ob der in Kleinbuchstaben umgewandelte Suchbegriff enthalten ist
+            if (value.toString().toLowerCase().includes(searchTerm)) {
+                return true;
+            }
+        }
+        return false;
+    });
+
+    // Anzeige der gefilterten Filme
+    displayMovies(searchResults);
+};
+
+
+displayMovies();
 
