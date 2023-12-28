@@ -8,16 +8,17 @@ body {
     font-family: Arial, sans-serif;
     height: 100vh;
     padding-top: 10rem;
+    background-color: black;
 }
 
 header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: black;
+    background-color: rgb(255, 229, 127);
     text-align: center;
     padding: 2rem;
-    color: white;
+    color: black;
     position: fixed;
     width: 100%;
     top: 0;
@@ -28,10 +29,16 @@ input {
     border-radius: 10px;
 }
 
+#genreFilter {
+    padding: 0.5rem;
+    border-radius: 10px;
+}
+
 button {
     padding: 0.5rem 1rem;
     cursor: pointer;
     border-radius: 10px;
+    background-color: white;
 }
 
 #movie-container {

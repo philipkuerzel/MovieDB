@@ -1001,11 +1001,13 @@ const movies = [
     ]
 ];
 
+
 const movieContainer = document.getElementById('movie-container');
 
 const createMovie = (movieInfo) => {
     const movieBox = document.createElement('div');
     movieBox.className = 'movie-box';
+    
     const genres = movieInfo[4].map(genre => `<p>${genre}</p>`).join('');
     movieBox.innerHTML = `
         <h2>${movieInfo[0]}</h2>
@@ -1022,8 +1024,6 @@ for (let i = 0; i < movies.length; i++) {
     movieContainer.appendChild(createMovie(movies[i]));
 }
 
-
-
 const sortMovies = (sortType) => {
     movieContainer.innerHTML = "";
     switch (sortType) {
@@ -1038,15 +1038,16 @@ const sortMovies = (sortType) => {
             break;
         default:
             return;
-        }
-        for (let i = 0; i < movies.length; i++) {
-                movieContainer.appendChild(createMovie(movies[i]));
-            }
-    return sortMovies
+    }
+    for (let i = 0; i < movies.length; i++) {
+        movieContainer.appendChild(createMovie(movies[i]));
+    }
+    return sortMovies;
 };
 
 const searchMovie = () => {
     const searchInput = document.getElementById("search").value.toLowerCase();
+    
     const searchResult = movies.filter(movie => movie[0].toLowerCase().includes(searchInput));
     movieContainer.innerHTML = "";
 
@@ -1059,8 +1060,39 @@ const searchMovie = () => {
             movieContainer.appendChild(createMovie(searchResult[i]));
         }
     }
-
     return searchMovie;
 }
 
 document.getElementById("search").addEventListener("keyup", searchMovie);
+
+const filterByGenre = (genre) => {
+    const filteredMovies = movies.filter(movie => movie[4].includes(genre));
+    movieContainer.innerHTML = "";
+
+    if (filteredMovies.length === 0) {
+        const noResultsMessage = document.createElement('p');
+        noResultsMessage.textContent = 'Film not found for the selected genre.';
+        movieContainer.appendChild(noResultsMessage);
+    } else {
+        for (let i = 0; i < filteredMovies.length; i++) {
+            movieContainer.appendChild(createMovie(filteredMovies[i]));
+        }
+    }
+}
+
+const applyGenreFilter = () => {
+    const genreFilterSelect = document.getElementById('genreFilter');
+    const selectedGenre = genreFilterSelect.value;
+
+    movieContainer.innerHTML = '';
+
+    if (selectedGenre === 'all') {
+        for (let i = 0; i < movies.length; i++) {
+            movieContainer.appendChild(createMovie(movies[i]));
+        }
+    } else {
+        filterByGenre(selectedGenre);
+    }
+};
+
+document.getElementById("genreFilter").addEventListener("change", applyGenreFilter)

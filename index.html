@@ -13,6 +13,32 @@
         <form>
             <input type="text" id="search" name="search" placeholder="Search...">  
         </form>
+        <!-- <label for="genreFilter">Filter by Genre:</label> -->
+
+    <div class="filterForGenres">
+        <select id="genreFilter">
+            <option value="all">All Genres</option>
+            <option value="Action">Action</option>
+            <option value="Adventure">Adventure</option>
+            <option value="Animation">Animation</option>
+            <option value="Biography">Biography</option>
+            <option value="Comedy">Comedy</option>
+            <option value="Crime">Crime</option>
+            <option value="Drama">Drama</option>
+            <option value="Family">Family</option>
+            <option value="Fantasy">Fantasy</option>
+            <option value="Horror">Horror</option>
+            <option value="Musical">Musical</option>
+            <option value="Mystery">Mystery</option>
+            <option value="Romance">Romance</option>
+            <option value="Sci-Fi">Sci-Fi</option>
+            <option value="Thriller">Thriller</option>
+            <option value="Western">Western</option>
+            <option value="War">War</option>
+        <!-- Weitere Genre-Optionen hier hinzufügen -->
+        </select>
+        <!-- <button onclick="applyGenreFilter()">Apply Filter</button> -->
+    </div>
         <div class="sort-container">
             <button type="button" onclick="sortMovies('yearUp')">Year Up</button>
             <button type="button" onclick="sortMovies('yearDown')">Year Down</button>
