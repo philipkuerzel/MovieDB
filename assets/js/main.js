@@ -1007,21 +1007,26 @@ const movieContainer = document.getElementById('movie-container');
 const createMovie = (movieInfo) => {
     const movieBox = document.createElement('div');
     movieBox.className = 'movie-box';
-    
     const genres = movieInfo[4].map(genre => `<p>${genre}</p>`).join('');
     movieBox.innerHTML = `
-        <h2>${movieInfo[0]}</h2>
-        <p>${movieInfo[1]}</p>
-        <p>${movieInfo[2]}</p>
-        <p>${movieInfo[3]}</p>
-        ${genres}
-        <p>${movieInfo[5]}</p>`;
-
+                <h2>${movieInfo[0]}</h2>
+                <p>${movieInfo[1]}</p>
+                <p>${movieInfo[2]}</p>
+                <p>${movieInfo[3]}</p>
+                ${genres}
+                <p>${movieInfo[5]}</p>`;
     return movieBox;
 }
 
-for (let i = 0; i < movies.length; i++) {
-    movieContainer.appendChild(createMovie(movies[i]));
+const updateMovieContainer = (moviesToAdd) => {
+    movieContainer.innerHTML = '';
+    if (moviesToAdd.length === 0) {
+        movieContainer.innerHTML = '<p>Sorry! No movies found.</p>';
+    } else {
+        moviesToAdd.forEach(movie => {
+            movieContainer.appendChild(createMovie(movie));
+        });
+    }
 }
 
 const sortMovies = (sortType) => {
@@ -1042,17 +1047,16 @@ const sortMovies = (sortType) => {
     for (let i = 0; i < movies.length; i++) {
         movieContainer.appendChild(createMovie(movies[i]));
     }
-    return sortMovies;
 };
 
 const searchMovie = () => {
     const searchInput = document.getElementById("search").value.toLowerCase();
-    
     const searchResult = movies.filter(movie => movie[0].toLowerCase().includes(searchInput));
     movieContainer.innerHTML = "";
 
     if (searchResult.length === 0) {
         const noResultMessage = document.createElement('p');
+        noResultMessage.className = "noResult"
         noResultMessage.textContent = 'Sorry! Film not found.';
         movieContainer.appendChild(noResultMessage);
     } else {
@@ -1060,39 +1064,23 @@ const searchMovie = () => {
             movieContainer.appendChild(createMovie(searchResult[i]));
         }
     }
-    return searchMovie;
+    // return searchMovie;
 }
 
 document.getElementById("search").addEventListener("keyup", searchMovie);
 
 const filterByGenre = (genre) => {
-    const filteredMovies = movies.filter(movie => movie[4].includes(genre));
-    movieContainer.innerHTML = "";
-
-    if (filteredMovies.length === 0) {
-        const noResultsMessage = document.createElement('p');
-        noResultsMessage.textContent = 'Film not found for the selected genre.';
-        movieContainer.appendChild(noResultsMessage);
-    } else {
-        for (let i = 0; i < filteredMovies.length; i++) {
-            movieContainer.appendChild(createMovie(filteredMovies[i]));
-        }
-    }
+    const filteredMovies = genre === 'all'
+        ? movies
+        : movies.filter(movie => movie[4].includes(genre));
+        updateMovieContainer(filteredMovies);
 }
 
 const applyGenreFilter = () => {
-    const genreFilterSelect = document.getElementById('genreFilter');
-    const selectedGenre = genreFilterSelect.value;
-
-    movieContainer.innerHTML = '';
-
-    if (selectedGenre === 'all') {
-        for (let i = 0; i < movies.length; i++) {
-            movieContainer.appendChild(createMovie(movies[i]));
-        }
-    } else {
-        filterByGenre(selectedGenre);
-    }
+    const selectedGenre = document.getElementById('genreFilter').value;
+    filterByGenre(selectedGenre);
 };
 
-document.getElementById("genreFilter").addEventListener("change", applyGenreFilter)
+document.getElementById("genreFilter").addEventListener("change", applyGenreFilter);
+
+updateMovieContainer(movies);

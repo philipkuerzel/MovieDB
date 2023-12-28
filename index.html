@@ -15,7 +15,8 @@
         </form>
         <!-- <label for="genreFilter">Filter by Genre:</label> -->
 
-    <div class="filterForGenres">
+        
+    <div class="sort-container">
         <select id="genreFilter">
             <option value="all">All Genres</option>
             <option value="Action">Action</option>
@@ -35,15 +36,11 @@
             <option value="Thriller">Thriller</option>
             <option value="Western">Western</option>
             <option value="War">War</option>
-        <!-- Weitere Genre-Optionen hier hinzufügen -->
         </select>
-        <!-- <button onclick="applyGenreFilter()">Apply Filter</button> -->
-    </div>
-        <div class="sort-container">
             <button type="button" onclick="sortMovies('yearUp')">Year Up</button>
             <button type="button" onclick="sortMovies('yearDown')">Year Down</button>
             <button type="button" onclick="sortMovies('bestRate')">Best Rate</button>
-        </div>
+    </div>
     </header>
     <main>
         <div class="movie-container" id="movie-container"></div>

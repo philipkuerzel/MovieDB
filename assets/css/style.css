@@ -24,6 +24,11 @@ header {
     top: 0;
 }
 
+.noResult {
+    color: red;
+    font-size: 2rem;
+}
+
 input {
     padding: 0.5rem;
     border-radius: 10px;
