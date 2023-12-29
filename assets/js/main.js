@@ -1020,14 +1020,12 @@ const createMovie = (movieInfo) => {
 
 const updateMovieContainer = (moviesToAdd) => {
     movieContainer.innerHTML = '';
-    if (moviesToAdd.length === 0) {
-        movieContainer.innerHTML = '<p>Sorry! No movies found.</p>';
-    } else {
-        moviesToAdd.forEach(movie => {
+    
+    moviesToAdd.forEach(movie => {
             movieContainer.appendChild(createMovie(movie));
-        });
-    }
+    });
 }
+
 
 const sortMovies = (sortType) => {
     movieContainer.innerHTML = "";
@@ -1061,6 +1059,14 @@ const searchAndFilter = () => {
     });
 
     updateMovieContainer(filteredMovies);
+
+    if (filteredMovies.length === 0) {
+        const noResultParagraph = document.createElement('p');
+        noResultParagraph.textContent = 'Sorry! No Movie found';
+        noResultParagraph.classList.add('noResult');
+
+        movieContainer.appendChild(noResultParagraph);
+    }
 };
 
 document.getElementById('search').addEventListener('keyup', searchAndFilter);
