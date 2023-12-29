@@ -1049,38 +1049,28 @@ const sortMovies = (sortType) => {
     }
 };
 
-const searchMovie = () => {
-    const searchInput = document.getElementById("search").value.toLowerCase();
-    const searchResult = movies.filter(movie => movie[0].toLowerCase().includes(searchInput) || movie[1].toString().includes(searchInput));
-    movieContainer.innerHTML = "";
-
-    if (searchResult.length === 0) {
-        const noResultMessage = document.createElement('p');
-        noResultMessage.className = "noResult"
-        noResultMessage.textContent = 'Sorry! Film not found.';
-        movieContainer.appendChild(noResultMessage);
-    } else {
-        for (let i = 0; i < searchResult.length; i++) {
-            movieContainer.appendChild(createMovie(searchResult[i]));
-        }
-    }
-}
-
-
-document.getElementById("search").addEventListener("keyup", searchMovie);
-
-const filterByGenre = (genre) => {
-    const filteredMovies = genre === 'all'
-        ? movies
-        : movies.filter(movie => movie[4].includes(genre));
-        updateMovieContainer(filteredMovies);
-}
-
-const applyGenreFilter = () => {
+const searchAndFilter = () => {
     const selectedGenre = document.getElementById('genreFilter').value;
-    filterByGenre(selectedGenre);
+    const searchInput = document.getElementById('search').value.toLowerCase();
+
+    const filteredMovies = movies.filter(movie => {
+        const matchesGenre = selectedGenre === 'all' || movie[4].includes(selectedGenre);
+        const matchesSearch = movie[0].toLowerCase().includes(searchInput) || movie[1].toString().includes(searchInput);
+
+        return matchesGenre && matchesSearch;
+    });
+
+    updateMovieContainer(filteredMovies);
 };
 
-document.getElementById("genreFilter").addEventListener("change", applyGenreFilter);
+document.getElementById('search').addEventListener('keyup', searchAndFilter);
+document.getElementById('genreFilter').addEventListener('change', searchAndFilter);
+
+const applyGenreFilter = () => {
+    filterByGenre(document.getElementById('genreFilter').value);
+    searchAndFilter();
+};
+
+document.getElementById('genreFilter').addEventListener('change', applyGenreFilter);
 
 updateMovieContainer(movies);
