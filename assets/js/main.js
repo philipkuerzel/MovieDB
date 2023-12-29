@@ -1002,8 +1002,10 @@ const movies = [
 ];
 
 
+// Get the movie container element from the HTML
 const movieContainer = document.getElementById('movie-container');
 
+// create a movie box element based on movie information
 const createMovie = (movieInfo) => {
     const movieBox = document.createElement('div');
     movieBox.className = 'movie-box';
@@ -1018,15 +1020,16 @@ const createMovie = (movieInfo) => {
     return movieBox;
 }
 
+// update the movie container with given movies
 const updateMovieContainer = (moviesToAdd) => {
     movieContainer.innerHTML = '';
-    
+
     moviesToAdd.forEach(movie => {
-            movieContainer.appendChild(createMovie(movie));
+        movieContainer.appendChild(createMovie(movie));
     });
 }
 
-
+// sort movies based on a specified criteria (year ascending, year descending or best rating)
 const sortMovies = (sortType) => {
     movieContainer.innerHTML = "";
     switch (sortType) {
@@ -1047,6 +1050,7 @@ const sortMovies = (sortType) => {
     }
 };
 
+// search and filter movies based on genre and search input
 const searchAndFilter = () => {
     const selectedGenre = document.getElementById('genreFilter').value;
     const searchInput = document.getElementById('search').value.toLowerCase();
@@ -1069,14 +1073,9 @@ const searchAndFilter = () => {
     }
 };
 
+// Event listeners for keyup event on search input and change event on genre filter
 document.getElementById('search').addEventListener('keyup', searchAndFilter);
 document.getElementById('genreFilter').addEventListener('change', searchAndFilter);
 
-const applyGenreFilter = () => {
-    filterByGenre(document.getElementById('genreFilter').value);
-    searchAndFilter();
-};
-
-document.getElementById('genreFilter').addEventListener('change', applyGenreFilter);
-
+// Update the movie container with the initial list of movies
 updateMovieContainer(movies);
