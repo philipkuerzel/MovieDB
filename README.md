@@ -33,7 +33,7 @@ This is a movie database application that displays a list of movies. Users can s
 4. searchAndFilter()
 * This function is called when the user types in the search input or changes the genre filter.
 * It retrieves the selected genre and search input values.
-* Filters the movies based on the selected genre and search input.
+* Filters the movies based on the selected genre and search input simultaneously.
 * Calls updateMovieContainer to display the filtered movies.
   
 5. Event Listeners
