@@ -1061,11 +1061,11 @@ const searchAndFilter = () => {
     updateMovieContainer(filteredMovies);
 
     if (filteredMovies.length === 0) {
-        const noResultParagraph = document.createElement('p');
-        noResultParagraph.textContent = 'Sorry! No Movie found';
-        noResultParagraph.classList.add('noResult');
+        const noResultMessage = document.createElement('p');
+        noResultMessage.textContent = 'Sorry! No Movie found 😕';
+        noResultMessage.classList.add('noResult');
 
-        movieContainer.appendChild(noResultParagraph);
+        movieContainer.appendChild(noResultMessage);
     }
 };
 
