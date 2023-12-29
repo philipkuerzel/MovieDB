@@ -1051,7 +1051,7 @@ const sortMovies = (sortType) => {
 
 const searchMovie = () => {
     const searchInput = document.getElementById("search").value.toLowerCase();
-    const searchResult = movies.filter(movie => movie[0].toLowerCase().includes(searchInput));
+    const searchResult = movies.filter(movie => movie[0].toLowerCase().includes(searchInput) || movie[1].toString().includes(searchInput));
     movieContainer.innerHTML = "";
 
     if (searchResult.length === 0) {
@@ -1064,8 +1064,8 @@ const searchMovie = () => {
             movieContainer.appendChild(createMovie(searchResult[i]));
         }
     }
-    // return searchMovie;
 }
+
 
 document.getElementById("search").addEventListener("keyup", searchMovie);
 
