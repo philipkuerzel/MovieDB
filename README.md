@@ -43,7 +43,7 @@ This is a movie database application that displays a list of movies. Users can s
 ## How to Use
 * Open index.html in a web browser.
 * Explore the list of movies.
-* Use the search input to find specific movies.
+* Use the search input to find specific movies by year or text.
 * Use the genre filter to filter movies by genre.
 * Sort movies by clicking on the "Year Up", "Year Down", or "Best Rating" buttons.
   
